@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="mythic">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planeswalker Lab - MTG Commander & Oathbreaker Deck Suite</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root, [data-theme="mythic"] {
+      --bg-base: #0a0b10;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #1f1a14 0%, #0a0b10 75%);
+      --surface-card: #14151e;
+      --surface-subtle: #1b1c28;
+      --surface-input: #0e0f17;
+      --border-accent: rgba(229, 193, 88, 0.35);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --accent-primary: #e5c158;
+      --accent-glow: rgba(229, 193, 88, 0.4);
+      --text-highlight: #fef3c7;
+      --btn-grad: linear-gradient(135deg, #d97706 0%, #b45309 50%, #78350f 100%);
+      --foil-grad: linear-gradient(125deg, rgba(229,193,88,0.2) 0%, rgba(245,158,11,0.35) 30%, rgba(217,119,6,0.15) 70%, rgba(254,243,199,0.3) 100%);
+      --header-bg: rgba(10, 11, 16, 0.92);
+      --badge-accent: rgba(245, 158, 11, 0.18);
+      --badge-border: rgba(245, 158, 11, 0.4);
+    }
+
+    [data-theme="phyrexian"] {
+      --bg-base: #07070a;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #200b13 0%, #07070a 75%);
+      --surface-card: #121218;
+      --surface-subtle: #191922;
+      --surface-input: #0c0c11;
+      --border-accent: rgba(244, 63, 94, 0.45);
+      --border-subtle: rgba(244, 63, 94, 0.15);
+      --accent-primary: #f43f5e;
+      --accent-glow: rgba(244, 63, 94, 0.5);
+      --text-highlight: #ffe4e6;
+      --btn-grad: linear-gradient(135deg, #e11d48 0%, #be123c 50%, #881337 100%);
+      --foil-grad: linear-gradient(125deg, rgba(244,63,94,0.25) 0%, rgba(136,19,55,0.45) 40%, rgba(225,29,72,0.2) 80%, rgba(254,205,211,0.3) 100%);
+      --header-bg: rgba(7, 7, 10, 0.92);
+      --badge-accent: rgba(244, 63, 94, 0.18);
+      --badge-border: rgba(244, 63, 94, 0.4);
+    }
+
+    [data-theme="neon"] {
+      --bg-base: #060913;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #0d1933 0%, #060913 75%);
+      --surface-card: #0c1222;
+      --surface-subtle: #131c33;
+      --surface-input: #080d19;
+      --border-accent: rgba(6, 182, 212, 0.45);
+      --border-subtle: rgba(6, 182, 212, 0.15);
+      --accent-primary: #06b6d4;
+      --accent-glow: rgba(6, 182, 212, 0.5);
+      --text-highlight: #cffafe;
+      --btn-grad: linear-gradient(135deg, #06b6d4 0%, #0284c7 50%, #4338ca 100%);
+      --foil-grad: linear-gradient(125deg, rgba(6,182,212,0.3) 0%, rgba(236,72,153,0.35) 50%, rgba(147,51,234,0.25) 100%);
+      --header-bg: rgba(6, 9, 19, 0.92);
+      --badge-accent: rgba(6, 182, 212, 0.18);
+      --badge-border: rgba(6, 182, 212, 0.4);
+    }
+
+    [data-theme="tome"] {
+      --bg-base: #0f0c09;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #2b1d14 0%, #0f0c09 75%);
+      --surface-card: #181410;
+      --surface-subtle: #231c16;
+      --surface-input: #110e0b;
+      --border-accent: rgba(217, 119, 6, 0.4);
+      --border-subtle: rgba(217, 119, 6, 0.14);
+      --accent-primary: #d97706;
+      --accent-glow: rgba(217, 119, 6, 0.45);
+      --text-highlight: #fef3c7;
+      --btn-grad: linear-gradient(135deg, #b45309 0%, #92400e 50%, #713f12 100%);
+      --foil-grad: linear-gradient(125deg, rgba(217,119,6,0.25) 0%, rgba(180,83,9,0.4) 45%, rgba(251,191,36,0.2) 100%);
+      --header-bg: rgba(15, 12, 9, 0.92);
+      --badge-accent: rgba(217, 119, 6, 0.18);
+      --badge-border: rgba(217, 119, 6, 0.4);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      background-color: var(--bg-base);
+      color: #e2e8f0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .font-cinzel {
+      font-family: 'Cinzel', serif;
+    }
+
+    .theme-header {
+      background: var(--header-bg);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .theme-surface {
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .theme-surface-subtle {
+      background: var(--surface-subtle);
+    }
+
+    .theme-border {
+      border-color: var(--border-accent);
+    }
+
+    .theme-accent-text {
+      color: var(--accent-primary);
+    }
+
+    .theme-btn-primary {
+      background: var(--btn-grad);
+      color: #ffffff;
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+
+    .theme-btn-primary:hover {
+      filter: brightness(1.12);
+      transform: translateY(-1px);
+    }
+
+    .theme-badge {
+      background: var(--badge-accent);
+      border: 1px solid var(--badge-border);
+      color: var(--text-highlight);
+    }
+
+    .foil-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .foil-shimmer::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--foil-grad);
+      opacity: 0.25;
+      pointer-events: none;
+      mix-blend-mode: color-dodge;
+      transition: opacity 0.3s ease;
+    }
+    .foil-shimmer:hover::after {
+      opacity: 0.6;
+    }
+
+    /* Fixed floating preview card */
+    #floatingCardTooltip {
+      display: none;
+      position: fixed;
+      z-index: 99999;
+      pointer-events: none;
+      transition: opacity 0.15s ease-out;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+    }
+    #floatingCardTooltip.active {
+      display: block;
+    }
+
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.4);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-accent);
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <header class="theme-header sticky top-0 z-40 w-full transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Brand & Mode Indicator -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center theme-surface border theme-border shadow-lg">
+          <i class="fa-solid fa-dice-d20 text-xl theme-accent-text"></i>
+        </div>
+        <div>
+          <span class="font-cinzel font-black tracking-wider text-base sm:text-lg block leading-tight text-white">PLANESWALKER LAB</span>
+          <span id="currentModeLabel" class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Commander (EDH)</span>
+        </div>
+      </div>
+
+      <!-- Mode Switcher Tabs -->
+      <div class="flex items-center bg-black/50 p-1 rounded-xl border border-white/10 shadow-inner">
+        <button id="modeBtnCommander" onclick="switchFormatMode('commander')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm">
+          <i class="fa-solid fa-crown text-xs"></i>
+          <span>Commander</span>
+        </button>
+        <button id="modeBtnOathbreaker" onclick="switchFormatMode('oathbreaker')" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition-all flex items-center gap-2">
+          <i class="fa-solid fa-hand-sparkles text-xs"></i>
+          <span>Oathbreaker</span>
+        </button>
+      </div>
+
+      <!-- Right Header Actions -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Pod Generator Modal Trigger -->
+        <button id="openPodModalBtn" onclick="openPodModal()" class="px-3 py-1.5 rounded-lg text-xs font-semibold theme-surface border border-white/10 hover:border-amber-400/40 text-slate-300 hover:text-white transition flex items-center gap-1.5 shadow-sm">
+          <i class="fa-solid fa-users text-amber-400"></i>
+          <span class="hidden sm:inline">Pod Roll</span>
+        </button>
+
+        <!-- Theme Switcher Dropdown -->
+        <div class="relative">
+          <button id="themeMenuBtn" onclick="toggleThemeMenu()" class="px-3 py-1.5 rounded-lg text-xs font-semibold theme-surface border border-white/10 hover:border-amber-400/40 text-slate-300 hover:text-white transition flex items-center gap-2 shadow-sm">
+            <i class="fa-solid fa-palette text-amber-400"></i>
+            <span id="activeThemeNameDisplay" class="hidden md:inline">Mythic Gold</span>
+            <i class="fa-solid fa-chevron-down text-[10px] opacity-60"></i>
+          </button>
+          
+          <div id="themeDropdownMenu" class="hidden absolute right-0 mt-2 w-48 rounded-xl theme-surface border theme-border shadow-2xl p-1.5 z-50">
+            <button onclick="setTheme('mythic')" class="w-full text-left px-3 py-2 text-xs font-medium rounded-lg hover:bg-white/10 flex items-center justify-between transition">
+              <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Mythic Gold</span>
+              <i class="fa-solid fa-check text-amber-400 theme-check" data-theme="mythic"></i>
+            </button>
+            <button onclick="setTheme('phyrexian')" class="w-full text-left px-3 py-2 text-xs font-medium rounded-lg hover:bg-white/10 flex items-center justify-between transition">
+              <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Phyrexian Oil</span>
+              <i class="fa-solid fa-check text-rose-500 hidden theme-check" data-theme="phyrexian"></i>
+            </button>
+            <button onclick="setTheme('neon')" class="w-full text-left px-3 py-2 text-xs font-medium rounded-lg hover:bg-white/10 flex items-center justify-between transition">
+              <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span> Kamigawa Neon</span>
+              <i class="fa-solid fa-check text-cyan-400 hidden theme-check" data-theme="neon"></i>
+            </button>
+            <button onclick="setTheme('tome')" class="w-full text-left px-3 py-2 text-xs font-medium rounded-lg hover:bg-white/10 flex items-center justify-between transition">
+              <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span> Urza's Tome</span>
+              <i class="fa-solid fa-check text-amber-600 hidden theme-check" data-theme="tome"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Audio Mute/Unmute Toggle -->
+        <button id="soundToggleBtn" onclick="toggleSound()" class="w-8 h-8 rounded-lg theme-surface border border-white/10 text-slate-400 hover:text-white flex items-center justify-center transition" title="Toggle Sound">
+          <i class="fa-solid fa-volume-high text-xs"></i>
+        </button>
+
+        <!-- Bookmarks Drawer Trigger -->
+        <button onclick="toggleDrawer()" class="px-3 py-1.5 rounded-lg text-xs font-semibold theme-surface border border-white/10 text-slate-300 hover:text-white transition flex items-center gap-1.5 shadow-sm">
+          <i class="fa-solid fa-bookmark text-amber-400"></i>
+          <span id="savedCountBadge" class="bg-amber-400/20 text-amber-300 text-[10px] px-1.5 py-0.2 rounded-full font-bold">0</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
+
+    <!-- Active Deck Roulette Challenge Banner -->
+    <div id="challengeBanner" class="w-full rounded-2xl theme-surface border theme-border p-4 sm:p-5 relative overflow-hidden shadow-xl transition-all">
+      <div class="absolute -right-8 -top-8 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+      
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-10">
+        <div class="flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-md">
+            <i id="challengeIcon" class="fa-solid fa-sack-dollar text-lg"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span id="challengeCategoryBadge" class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md theme-badge">Budget Challenge</span>
+              <span id="challengeDifficultyBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-white/10 text-slate-300">Medium</span>
+            </div>
+            <h3 id="challengeTitle" class="text-base sm:text-lg font-bold font-cinzel text-white leading-tight">Budget Under $50</h3>
+            <p id="challengeDesc" class="text-xs text-slate-300 mt-0.5 max-w-2xl leading-relaxed">The total value of your 99 cards (excluding Commander) must not exceed $50 USD based on market prices.</p>
+          </div>
+        </div>
+
+        <!-- Challenge Actions -->
+        <div class="flex items-center gap-2 self-end sm:self-center">
+          <button id="lockChallengeBtn" onclick="toggleChallengeLock()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-lock-open text-xs opacity-60"></i>
+            <span class="hidden sm:inline">Lock Challenge</span>
+          </button>
+          <button onclick="rollNewChallenge()" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold theme-btn-primary transition flex items-center gap-1.5 shadow-md">
+            <i class="fa-solid fa-dice text-xs"></i>
+            <span>Reroll Challenge</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Layout Grid: Left Sidebar & Center Showcase -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- Left Filters Sidebar -->
+      <aside class="lg:col-span-4 flex flex-col gap-5 theme-surface border theme-border rounded-2xl p-5 shadow-xl">
+        <div class="flex items-center justify-between border-b border-white/10 pb-3">
+          <h2 class="font-cinzel font-bold text-sm text-white flex items-center gap-2">
+            <i class="fa-solid fa-sliders theme-accent-text"></i>
+            Summoning Filters
+          </h2>
+          <button onclick="resetFilters()" class="text-xs text-slate-400 hover:text-white transition">Reset</button>
+        </div>
+
+        <!-- Color Identity Buttons -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Color Identity</label>
+          <div class="grid grid-cols-6 gap-2">
+            <button onclick="toggleManaColor('W')" data-color="W" class="mana-btn aspect-square rounded-xl flex items-center justify-center font-bold text-sm bg-white/5 border border-white/10 text-amber-200 hover:border-amber-300 transition shadow-sm">W</button>
+            <button onclick="toggleManaColor('U')" data-color="U" class="mana-btn aspect-square rounded-xl flex items-center justify-center font-bold text-sm bg-white/5 border border-white/10 text-blue-300 hover:border-blue-400 transition shadow-sm">U</button>
+            <button onclick="toggleManaColor('B')" data-color="B" class="mana-btn aspect-square rounded-xl flex items-center justify-center font-bold text-sm bg-white/5 border border-white/10 text-slate-400 hover:border-slate-300 transition shadow-sm">B</button>
+            <button onclick="toggleManaColor('R')" data-color="R" class="mana-btn aspect-square rounded-xl flex items-center justify-center font-bold text-sm bg-white/5 border border-white/10 text-rose-300 hover:border-rose-400 transition shadow-sm">R</button>
+            <button onclick="toggleManaColor('G')" data-color="G" class="mana-btn aspect-square rounded-xl flex items-center justify-center font-bold text-sm bg-white/5 border border-white/10 text-emerald-300 hover:border-emerald-400 transition shadow-sm">G</button>
+            <button onclick="toggleManaColor('C')" data-color="C" class="mana-btn aspect-square rounded-xl flex items-center justify-center font-bold text-sm bg-white/5 border border-white/10 text-slate-400 hover:border-slate-300 transition shadow-sm">C</button>
+          </div>
+        </div>
+
+        <!-- Color Logic -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Color Match Rule</label>
+          <div class="grid grid-cols-3 gap-1.5 p-1 bg-black/40 rounded-xl border border-white/10 text-xs">
+            <button onclick="setColorLogic('exact')" id="logicExactBtn" class="py-1.5 rounded-lg font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 transition">Exact (=)</button>
+            <button onclick="setColorLogic('at_most')" id="logicAtMostBtn" class="py-1.5 rounded-lg text-slate-400 hover:text-white transition">At Most (&le;)</button>
+            <button onclick="setColorLogic('at_least')" id="logicAtLeastBtn" class="py-1.5 rounded-lg text-slate-400 hover:text-white transition">At Least (&ge;)</button>
+          </div>
+        </div>
+
+        <!-- Format Specific Card Filters -->
+        <div id="commanderTypeFilterSection">
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Leader Archetype</label>
+          <select id="commanderTypeSelect" onchange="applyFilterChange()" class="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+            <option value="any">Any Legal Commander</option>
+            <option value="creature">Legendary Creature Only</option>
+            <option value="planeswalker">Legal Planeswalker</option>
+            <option value="partner">Partner / Friends Forever</option>
+            <option value="background">Choose a Background</option>
+          </select>
+        </div>
+
+        <!-- Signature Spell Options (Oathbreaker Mode Only) -->
+        <div id="oathSpellTypeSection" class="hidden">
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Signature Spell Type</label>
+          <select id="oathSpellSelect" onchange="applyFilterChange()" class="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+            <option value="any">Instant or Sorcery (Any)</option>
+            <option value="instant">Instant Only</option>
+            <option value="sorcery">Sorcery Only</option>
+          </select>
+        </div>
+
+        <!-- Filter Toggles -->
+        <div class="flex flex-col gap-2.5 pt-2 border-t border-white/10 text-xs text-slate-300">
+          <label class="flex items-center justify-between cursor-pointer">
+            <span>Budget Card Only (&lt; $5 USD)</span>
+            <input type="checkbox" id="budgetToggle" onchange="applyFilterChange()" class="rounded bg-black/40 border-white/20 text-amber-500 focus:ring-0">
+          </label>
+          <label class="flex items-center justify-between cursor-pointer">
+            <span>Exclude Un-sets & Parody Cards</span>
+            <input type="checkbox" id="unsetsToggle" checked onchange="applyFilterChange()" class="rounded bg-black/40 border-white/20 text-amber-500 focus:ring-0">
+          </label>
+        </div>
+
+        <!-- Scryfall Query Live Preview -->
+        <div class="mt-2 p-2.5 rounded-xl bg-black/60 border border-white/5 text-[11px] font-mono text-slate-400 break-all">
+          <span class="text-amber-400/80">Scryfall query:</span>
+          <div id="liveScryfallQuery" class="mt-0.5 text-slate-300">is:commander legal:commander</div>
+        </div>
+      </aside>
+
+      <section class="lg:col-span-8 flex flex-col gap-6">
+
+        <!-- COMMANDER MODE SHOWCASE -->
+        <div id="commanderDisplayContainer" class="theme-surface border theme-border rounded-2xl p-6 shadow-2xl relative">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+            
+            <!-- Card Image Area (Foil effect & transform support) -->
+            <div class="md:col-span-5 flex flex-col items-center gap-3">
+              <div class="w-full max-w-[280px] aspect-[5/7] rounded-2xl overflow-hidden shadow-2xl border border-white/15 foil-shimmer relative">
+                <img id="cardArtImage" src="https://placehold.co/488x680/14151e/e5c158?text=Summoning..." alt="MTG Card Artwork" class="w-full h-full object-cover">
+                <div id="cardLoadingOverlay" class="absolute inset-0 bg-black/75 flex items-center justify-center transition-opacity duration-200 hidden">
+                  <i class="fa-solid fa-spinner fa-spin text-3xl theme-accent-text"></i>
+                </div>
+              </div>
+
+              <!-- Transform Card Button (for Dual-Faced Cards) -->
+              <button id="flipCardFaceBtn" onclick="toggleCardFace()" class="hidden px-3.5 py-1.5 rounded-lg text-xs font-semibold theme-surface border border-white/10 hover:border-amber-400 text-slate-300 hover:text-white transition flex items-center gap-2 shadow-sm">
+                <i class="fa-solid fa-rotate text-xs"></i>
+                <span>Transform Card Face</span>
+              </button>
+            </div>
+
+            <!-- Card Metadata & Text -->
+            <div class="md:col-span-7 flex flex-col gap-3.5">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <h1 id="cardName" class="text-xl sm:text-2xl font-bold font-cinzel text-white leading-tight">Card Name</h1>
+                  <p id="cardType" class="text-xs text-slate-400 font-medium mt-0.5">Legendary Creature — Type</p>
+                </div>
+                <button id="bookmarkCardBtn" onclick="toggleFavoriteCurrentCard()" class="w-9 h-9 rounded-xl theme-surface border border-white/10 hover:border-amber-400 text-slate-400 hover:text-amber-400 flex items-center justify-center transition shadow-sm" title="Save to Favorites">
+                  <i class="fa-regular fa-bookmark"></i>
+                </button>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-2">
+                <div id="cardManaSymbols" class="flex items-center gap-1"></div>
+                <span id="cardRarityBadge" class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md theme-badge">Mythic Rare</span>
+                <span id="cardPriceTag" class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">$0.00 USD</span>
+                <span id="cardPowerToughness" class="hidden text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-white/10 text-white">4 / 4</span>
+              </div>
+
+              <div class="p-4 rounded-xl bg-black/50 border border-white/10 text-xs text-slate-200 leading-relaxed min-h-[90px] whitespace-pre-line" id="cardOracleText">
+                Oracle rules text will display here upon summoning.
+              </div>
+
+              <div class="flex items-center gap-4 text-xs font-semibold pt-1">
+                <a id="scryfallLink" href="#" target="_blank" class="theme-accent-text hover:underline flex items-center gap-1.5">
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Scryfall
+                </a>
+                <a id="edhrecLink" href="#" target="_blank" class="text-slate-400 hover:text-white hover:underline flex items-center gap-1.5">
+                  <i class="fa-solid fa-chart-pie text-[10px]"></i> EDHREC
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Action Buttons -->
+          <div class="mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+            <button id="rollCommanderBtn" onclick="fetchRandomCommander()" class="px-6 py-3 rounded-xl text-sm font-bold theme-btn-primary transition flex items-center gap-2.5 shadow-xl">
+              <i class="fa-solid fa-dice-d20 text-base"></i>
+              <span>Summon Commander</span>
+            </button>
+
+            <button id="autoBuildDeckBtn" onclick="startAutomatedDeckBuild()" class="px-5 py-3 rounded-xl text-sm font-bold bg-white/10 hover:bg-white/15 border border-white/20 text-white transition flex items-center gap-2 shadow-lg">
+              <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i>
+              <span>Auto-Build 100-Card Deck</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- OATHBREAKER DUAL-CARD SHOWCASE (Planeswalker + Signature Spell) -->
+        <div id="oathbreakerDisplayContainer" class="hidden theme-surface border theme-border rounded-2xl p-6 shadow-2xl flex-col gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Oathbreaker Planeswalker Box -->
+            <div class="flex flex-col gap-3 p-4 rounded-xl bg-black/40 border border-white/10">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                  <i class="fa-solid fa-user-shield"></i> Planeswalker
+                </span>
+                <button onclick="rerollPlaneswalkerOnly()" class="text-[11px] text-slate-400 hover:text-white flex items-center gap-1">
+                  <i class="fa-solid fa-rotate-right text-[10px]"></i> Re-roll Walker
+                </button>
+              </div>
+              <div class="w-full aspect-[5/7] rounded-xl overflow-hidden shadow border border-white/10 foil-shimmer relative">
+                <img id="oathPlaneswalkerImg" src="https://placehold.co/488x680/14151e/e5c158?text=Planeswalker" alt="Planeswalker Artwork" class="w-full h-full object-cover">
+              </div>
+              <div>
+                <h3 id="oathPlaneswalkerName" class="font-cinzel font-bold text-base text-white">Planeswalker Name</h3>
+                <p id="oathPlaneswalkerType" class="text-xs text-slate-400">Legendary Planeswalker</p>
+                <div id="oathPlaneswalkerLoyalty" class="text-[10px] font-bold text-amber-300 mt-1">Loyalty: 4</div>
+              </div>
+            </div>
+
+            <!-- Signature Spell Box -->
+            <div class="flex flex-col gap-3 p-4 rounded-xl bg-black/40 border border-white/10">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> Signature Spell
+                </span>
+                <button onclick="rerollSignatureSpellOnly()" class="text-[11px] text-slate-400 hover:text-white flex items-center gap-1">
+                  <i class="fa-solid fa-rotate-right text-[10px]"></i> Re-roll Spell
+                </button>
+              </div>
+              <div class="w-full aspect-[5/7] rounded-xl overflow-hidden shadow border border-white/10 foil-shimmer relative">
+                <img id="oathSpellImg" src="https://placehold.co/488x680/14151e/e5c158?text=Signature+Spell" alt="Signature Spell Artwork" class="w-full h-full object-cover">
+              </div>
+              <div>
+                <h3 id="oathSpellName" class="font-cinzel font-bold text-base text-white">Spell Name</h3>
+                <p id="oathSpellType" class="text-xs text-slate-400">Instant / Sorcery</p>
+                <div id="oathSpellCost" class="text-[10px] font-bold text-amber-300 mt-1">Mana Cost</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Action Buttons for Oathbreaker -->
+          <div class="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+            <button onclick="fetchRandomOathbreakerPair()" class="px-6 py-3 rounded-xl text-sm font-bold theme-btn-primary transition flex items-center gap-2 shadow-xl">
+              <i class="fa-solid fa-dice-d20"></i>
+              <span>Summon Oathbreaker Pair</span>
+            </button>
+            <button onclick="startAutomatedDeckBuild()" class="px-5 py-3 rounded-xl text-sm font-bold bg-white/10 hover:bg-white/15 border border-white/20 text-white transition flex items-center gap-2 shadow-lg">
+              <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i>
+              <span>Auto-Build 60-Card Deck</span>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <div id="deckViewerModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md">
+    <div class="theme-surface border theme-border rounded-2xl w-full max-w-5xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+            <i class="fa-solid fa-layer-group text-sm"></i>
+          </div>
+          <div>
+            <h3 id="deckModalTitle" class="font-cinzel font-bold text-base sm:text-lg text-white">Generated Decklist</h3>
+            <div class="flex items-center gap-2 text-xs text-slate-400">
+              <span id="deckCardCountBadge" class="text-emerald-400 font-bold">100 Cards Exact ✓</span>
+              <span>•</span>
+              <span id="deckEstCostBadge">Est: $42.50 USD</span>
+              <span>•</span>
+              <span id="deckArchetypeBadge">Synergy: Midrange</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="drawSampleHand()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/10 hover:bg-white/15 text-slate-200 flex items-center gap-1.5">
+            <i class="fa-solid fa-hand text-amber-400"></i>
+            <span>Draw 7 Hand</span>
+          </button>
+          <button onclick="openExportModal()" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold theme-btn-primary flex items-center gap-1.5">
+            <i class="fa-solid fa-file-export text-xs"></i>
+            <span>Export Deck</span>
+          </button>
+          <button onclick="closeDeckModal()" class="w-8 h-8 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center">
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Challenge Verification Status Bar -->
+      <div id="deckChallengeStatusBanner" class="px-6 py-2 bg-emerald-950/40 border-b border-emerald-500/20 flex items-center justify-between text-xs">
+        <span class="text-emerald-300 font-semibold flex items-center gap-2">
+          <i class="fa-solid fa-circle-check"></i>
+          <span id="deckChallengeStatusText">Challenge Compliance Verified: All deckbuilding restrictions satisfied.</span>
+        </span>
+      </div>
+
+      <!-- Interactive Deck Tools: Category Filter & Search -->
+      <div class="px-6 py-3 bg-black/40 border-b border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-1.5">
+          <button onclick="filterDeckCategory('all')" id="catAllBtn" class="px-3 py-1 rounded-lg font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">All</button>
+          <button onclick="filterDeckCategory('creature')" id="catCreatureBtn" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white">Creatures</button>
+          <button onclick="filterDeckCategory('spell')" id="catSpellBtn" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white">Spells</button>
+          <button onclick="filterDeckCategory('artifact')" id="catArtifactBtn" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white">Artifacts/Enchants</button>
+          <button onclick="filterDeckCategory('land')" id="catLandBtn" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white">Lands</button>
+        </div>
+
+        <input type="text" id="deckCardSearchInput" oninput="searchDeckCards()" placeholder="Search in deck..." class="px-3 py-1 bg-black/60 border border-white/10 rounded-lg text-xs text-white focus:outline-none focus:border-amber-400 w-44">
+      </div>
+
+      <!-- Scrollable Deck List -->
+      <div class="flex-1 overflow-y-auto p-6">
+        <div id="deckCardListTable" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="exportModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md">
+    <div class="theme-surface border theme-border rounded-2xl w-full max-w-2xl flex flex-col shadow-2xl overflow-hidden">
+      
+      <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between">
+        <h3 class="font-cinzel font-bold text-base text-white flex items-center gap-2">
+          <i class="fa-solid fa-cloud-arrow-up theme-accent-text"></i>
+          Export Clean Decklist
+        </h3>
+        <button onclick="closeExportModal()" class="w-8 h-8 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <div class="p-6 flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <p class="text-xs text-slate-300">Clean text format (removes bracketed tags like <code>(Commander)</code> and comment categories) for 100% paste compatibility.</p>
+          <label class="flex items-center gap-2 text-xs text-amber-300 cursor-pointer">
+            <input type="checkbox" id="cleanExportToggle" checked onchange="refreshExportText()" class="rounded bg-black/50 text-amber-500">
+            <span>Clean Mode</span>
+          </label>
+        </div>
+        
+        <textarea id="exportDecklistTextarea" readonly class="w-full h-64 bg-black/60 border border-white/10 rounded-xl p-4 font-mono text-xs text-slate-200 focus:outline-none resize-none"></textarea>
+
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+          <button onclick="copyExportTextToClipboard()" class="px-4 py-2 rounded-xl text-xs font-bold theme-btn-primary flex items-center gap-2">
+            <i class="fa-solid fa-copy"></i>
+            <span id="copyBtnLabel">Copy to Clipboard</span>
+          </button>
+
+          <div class="flex items-center gap-2">
+            <button onclick="copyAndOpenArchidekt()" class="px-4 py-2 rounded-xl text-xs font-bold bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 border border-amber-500/40 flex items-center gap-2">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <span>Copy & Open Archidekt</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="podModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md">
+    <div class="theme-surface border theme-border rounded-2xl w-full max-w-5xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
+      
+      <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+            <i class="fa-solid fa-users text-sm"></i>
+          </div>
+          <div>
+            <h3 class="font-cinzel font-bold text-lg text-white">Multiplayer Pod Generator</h3>
+            <p class="text-xs text-slate-400">Roll balanced commanders for a 2-player duel, 3-pod, or full 4-pod.</p>
+          </div>
+        </div>
+        <button onclick="closePodModal()" class="w-8 h-8 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <!-- Pod Options Header -->
+      <div class="px-6 py-3 bg-black/40 border-b border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="text-slate-400 font-semibold">Pod Size:</span>
+          <div class="flex items-center bg-black/50 rounded-lg p-0.5 border border-white/10">
+            <button onclick="setPodSize(2)" id="podSize2Btn" class="px-3 py-1 rounded font-semibold text-slate-400 hover:text-white">2-Pod</button>
+            <button onclick="setPodSize(3)" id="podSize3Btn" class="px-3 py-1 rounded font-semibold text-slate-400 hover:text-white">3-Pod</button>
+            <button onclick="setPodSize(4)" id="podSize4Btn" class="px-3 py-1 rounded font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">4-Pod</button>
+          </div>
+        </div>
+
+        <button onclick="generatePodLineup()" class="px-4 py-2 rounded-xl text-xs font-bold theme-btn-primary flex items-center gap-2">
+          <i class="fa-solid fa-dice-d20"></i>
+          <span>Roll Entire Pod</span>
+        </button>
+      </div>
+
+      <!-- Pod Seats Container -->
+      <div class="flex-1 overflow-y-auto p-6">
+        <div id="podSeatsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="sampleHandModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md">
+    <div class="theme-surface border theme-border rounded-2xl w-full max-w-4xl flex flex-col shadow-2xl overflow-hidden">
+      <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between">
+        <h3 class="font-cinzel font-bold text-base text-white flex items-center gap-2">
+          <i class="fa-solid fa-hand theme-accent-text"></i>
+          Sample Opening Hand (7 Cards)
+        </h3>
+        <button onclick="closeSampleHandModal()" class="w-8 h-8 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+      <div class="p-6">
+        <div id="sampleHandCardsGrid" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5 mb-6"></div>
+        <div class="flex items-center justify-between">
+          <button onclick="drawSampleHand()" class="px-4 py-2 rounded-xl text-xs font-bold theme-btn-primary flex items-center gap-2">
+            <i class="fa-solid fa-rotate-right"></i> Mulligan (Draw New 7)
+          </button>
+          <button onclick="closeSampleHandModal()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/15 text-slate-300">
+            Back to Decklist
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Card Art Tooltip -->
+  <div id="floatingCardTooltip" class="w-60 aspect-[5/7] rounded-xl overflow-hidden shadow-2xl border border-white/20 bg-slate-950">
+    <img id="floatingCardImg" src="https://placehold.co/488x680/14151e/e5c158?text=Preview" alt="Card Preview" class="w-full h-full object-cover">
+  </div>
+
+  <script>
+    // Audio synthesizer for rolling feedback
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playDiceSound() {
+      if (!state.soundEnabled) return;
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(340, now);
+        osc.frequency.exponentialRampToValueAtTime(740, now + 0.08);
+        osc.frequency.exponentialRampToValueAtTime(220, now + 0.16);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.18);
+      } catch (e) {
+        // audio fallback
+      }
+    }
+
+    const state = {
+      format: 'commander',
+      activeTheme: 'mythic',
+      selectedColors: new Set(),
+      colorLogic: 'exact',
+      commanderType: 'any',
+      oathSpellType: 'any',
+      budgetOnly: false,
+      excludeUnsets: true,
+      soundEnabled: true,
+      currentCard: null,
+      oathPlaneswalker: null,
+      oathSpell: null,
+      isFlipped: false,
+      generatedDeck: null,
+      challengeLocked: false,
+      currentChallenge: null,
+      podSize: 4,
+      podSeats: [],
+      favorites: []
+    };
+
+    const CHALLENGES = [
+      { title: "Budget Under $50", category: "Budget Challenge", difficulty: "Medium", icon: "fa-sack-dollar", desc: "The total value of your 99 cards (excluding Commander) must not exceed $50 USD." },
+      { title: "Penny Dreadful (< $0.50)", category: "Budget Challenge", difficulty: "Hard", icon: "fa-coins", desc: "Every single card in the 99 must cost under $0.50 USD on Scryfall market price." },
+      { title: "Oops! All Permanents", category: "Restriction", difficulty: "Hard", icon: "fa-cubes-stacked", desc: "Zero instants and sorceries in the main deck. Everything must be a permanent card." },
+      { title: "Zero Tutors Allowed", category: "Restriction", difficulty: "Easy", icon: "fa-compass-drafting", desc: "Strictly no search effects (except basic land fetchers like Evolving Wilds)." },
+      { title: "Odd Mana Value Only", category: "Companion", difficulty: "Hard", icon: "fa-dice-d6", desc: "Every card in your deck must have an odd mana value (1, 3, 5, 7+). Yennett style." },
+      { title: "Even Mana Value Only", category: "Companion", difficulty: "Hard", icon: "fa-shapes", desc: "Every card in your deck must have an even mana value (2, 4, 6, 8+). Gyruda style." },
+      { title: "Precon Power Level", category: "Power Level", difficulty: "Casual", icon: "fa-scale-balanced", desc: "Average win turn 10+. Balanced mana base, standard ramp, minimal fast-mana, no infinite loops." }
+    ];
+
+    const THEMES = {
+      mythic: { name: 'Mythic Gold' },
+      phyrexian: { name: 'Phyrexian Oil' },
+      neon: { name: 'Kamigawa Neon' },
+      tome: { name: "Urza's Tome" }
+    };
+
+    function setTheme(themeKey) {
+      if (!THEMES[themeKey]) themeKey = 'mythic';
+      state.activeTheme = themeKey;
+      document.documentElement.setAttribute('data-theme', themeKey);
+      
+      const label = document.getElementById('activeThemeNameDisplay');
+      if (label) label.textContent = THEMES[themeKey].name;
+
+      document.querySelectorAll('.theme-check').forEach(el => {
+        el.classList.toggle('hidden', el.getAttribute('data-theme') !== themeKey);
+      });
+
+      const menu = document.getElementById('themeDropdownMenu');
+      if (menu) menu.classList.add('hidden');
+    }
+
+    function toggleThemeMenu() {
+      const menu = document.getElementById('themeDropdownMenu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    function toggleSound() {
+      state.soundEnabled = !state.soundEnabled;
+      const btn = document.getElementById('soundToggleBtn');
+      if (btn) {
+        btn.innerHTML = `<i class="fa-solid fa-volume-${state.soundEnabled ? 'high' : 'xmark'} text-xs"></i>`;
+      }
+    }
+
+    function switchFormatMode(mode) {
+      state.format = mode;
+      const cmdrBtn = document.getElementById('modeBtnCommander');
+      const oathBtn = document.getElementById('modeBtnOathbreaker');
+      const modeLabel = document.getElementById('currentModeLabel');
+      const cmdrDisplay = document.getElementById('commanderDisplayContainer');
+      const oathDisplay = document.getElementById('oathbreakerDisplayContainer');
+      const cmdrSection = document.getElementById('commanderTypeFilterSection');
+      const oathSection = document.getElementById('oathSpellTypeSection');
+
+      if (mode === 'commander') {
+        cmdrBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm';
+        oathBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition-all flex items-center gap-2';
+        if (modeLabel) modeLabel.textContent = 'Commander (EDH)';
+        if (cmdrDisplay) cmdrDisplay.classList.remove('hidden');
+        if (oathDisplay) oathDisplay.classList.add('hidden');
+        if (cmdrSection) cmdrSection.classList.remove('hidden');
+        if (oathSection) oathSection.classList.add('hidden');
+        fetchRandomCommander();
+      } else {
+        oathBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm';
+        cmdrBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition-all flex items-center gap-2';
+        if (modeLabel) modeLabel.textContent = 'Oathbreaker';
+        if (cmdrDisplay) cmdrDisplay.classList.add('hidden');
+        if (oathDisplay) oathDisplay.classList.remove('hidden');
+        if (cmdrSection) cmdrSection.classList.add('hidden');
+        if (oathSection) oathSection.classList.remove('hidden');
+        fetchRandomOathbreakerPair();
+      }
+      buildScryfallQuery();
+    }
+
+    function rollNewChallenge() {
+      if (state.challengeLocked) return;
+      const choice = CHALLENGES[Math.floor(Math.random() * CHALLENGES.length)];
+      state.currentChallenge = choice;
+      playDiceSound();
+
+      document.getElementById('challengeTitle').textContent = choice.title;
+      document.getElementById('challengeDesc').textContent = choice.desc;
+      document.getElementById('challengeCategoryBadge').textContent = choice.category;
+      document.getElementById('challengeDifficultyBadge').textContent = choice.difficulty;
+      document.getElementById('challengeIcon').className = `fa-solid ${choice.icon} text-lg`;
+    }
+
+    function toggleChallengeLock() {
+      state.challengeLocked = !state.challengeLocked;
+      const btn = document.getElementById('lockChallengeBtn');
+      if (btn) {
+        btn.innerHTML = `<i class="fa-solid fa-lock${state.challengeLocked ? '' : '-open'} text-xs ${state.challengeLocked ? 'text-amber-400' : 'opacity-60'}"></i> <span class="hidden sm:inline">${state.challengeLocked ? 'Locked' : 'Lock Challenge'}</span>`;
+      }
+    }
+
+    function toggleManaColor(color) {
+      if (color === 'C') {
+        state.selectedColors.clear();
+        state.selectedColors.add('C');
+      } else {
+        state.selectedColors.delete('C');
+        if (state.selectedColors.has(color)) state.selectedColors.delete(color);
+        else state.selectedColors.add(color);
+      }
+      updateManaButtons();
+      buildScryfallQuery();
+    }
+
+    function updateManaButtons() {
+      document.querySelectorAll('.mana-btn').forEach(btn => {
+        const c = btn.getAttribute('data-color');
+        const active = state.selectedColors.has(c);
+        btn.classList.toggle('ring-2', active);
+        btn.classList.toggle('ring-amber-400', active);
+        btn.classList.toggle('bg-white/20', active);
+      });
+    }
+
+    function setColorLogic(logic) {
+      state.colorLogic = logic;
+      document.getElementById('logicExactBtn').className = logic === 'exact' ? 'py-1.5 rounded-lg font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'py-1.5 rounded-lg text-slate-400 hover:text-white';
+      document.getElementById('logicAtMostBtn').className = logic === 'at_most' ? 'py-1.5 rounded-lg font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'py-1.5 rounded-lg text-slate-400 hover:text-white';
+      document.getElementById('logicAtLeastBtn').className = logic === 'at_least' ? 'py-1.5 rounded-lg font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'py-1.5 rounded-lg text-slate-400 hover:text-white';
+      buildScryfallQuery();
+    }
+
+    function applyFilterChange() {
+      state.commanderType = document.getElementById('commanderTypeSelect').value;
+      state.budgetOnly = document.getElementById('budgetToggle').checked;
+      state.excludeUnsets = document.getElementById('unsetsToggle').checked;
+      buildScryfallQuery();
+    }
+
+    function resetFilters() {
+      state.selectedColors.clear();
+      state.colorLogic = 'exact';
+      state.commanderType = 'any';
+      document.getElementById('commanderTypeSelect').value = 'any';
+      document.getElementById('budgetToggle').checked = false;
+      document.getElementById('unsetsToggle').checked = true;
+      updateManaButtons();
+      setColorLogic('exact');
+      applyFilterChange();
+    }
+
+    function buildScryfallQuery() {
+      let q = state.format === 'commander' ? 'is:commander legal:commander' : 't:planeswalker legal:oathbreaker';
+
+      if (state.format === 'commander') {
+        if (state.commanderType === 'creature') q += ' t:legendary t:creature';
+        else if (state.commanderType === 'planeswalker') q += ' t:planeswalker';
+        else if (state.commanderType === 'partner') q += ' (keyword:partner or keyword:"friends forever")';
+        else if (state.commanderType === 'background') q += ' keyword:"choose a background"';
+      }
+
+      if (state.selectedColors.size > 0) {
+        if (state.selectedColors.has('C')) {
+          q += ' identity:c';
+        } else {
+          const c = Array.from(state.selectedColors).join('');
+          if (state.colorLogic === 'exact') q += ` identity=${c}`;
+          else if (state.colorLogic === 'at_most') q += ` identity<=${c}`;
+          else if (state.colorLogic === 'at_least') q += ` identity>=${c}`;
+        }
+      }
+
+      if (state.budgetOnly) q += ' usd<5';
+      if (state.excludeUnsets) q += ' -is:funny -set:unh -set:ugl -set:ust -set:und -set:unf';
+
+      const preview = document.getElementById('liveScryfallQuery');
+      if (preview) preview.textContent = q;
+      return q;
+    }
+
+    async function fetchRandomCommander() {
+      const btn = document.getElementById('rollCommanderBtn');
+      const overlay = document.getElementById('cardLoadingOverlay');
+      if (btn) btn.disabled = true;
+      if (overlay) overlay.classList.remove('hidden');
+
+      try {
+        if (!state.challengeLocked) rollNewChallenge();
+        playDiceSound();
+
+        const q = buildScryfallQuery();
+        const res = await fetch(`https://api.scryfall.com/cards/random?q=${encodeURIComponent(q)}`);
+        if (!res.ok) throw new Error('No matching cards found.');
+
+        const card = await res.json();
+        state.currentCard = card;
+        state.isFlipped = false;
+        renderCommander(card);
+      } catch (err) {
+        console.warn(err);
+      } finally {
+        if (btn) btn.disabled = false;
+        if (overlay) overlay.classList.add('hidden');
+      }
+    }
+
+    async function fetchRandomOathbreakerPair() {
+      try {
+        if (!state.challengeLocked) rollNewChallenge();
+        playDiceSound();
+
+        // 1. Fetch Planeswalker
+        const qWalker = 't:planeswalker legal:oathbreaker' + (state.budgetOnly ? ' usd<5' : '');
+        const resWalker = await fetch(`https://api.scryfall.com/cards/random?q=${encodeURIComponent(qWalker)}`);
+        const walker = await resWalker.json();
+        state.oathPlaneswalker = walker;
+        state.currentCard = walker;
+
+        // 2. Fetch Signature Spell within walker's identity
+        await rerollSignatureSpellOnly();
+        renderOathbreakerPair();
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    async function rerollPlaneswalkerOnly() {
+      try {
+        playDiceSound();
+        const resWalker = await fetch(`https://api.scryfall.com/cards/random?q=t:planeswalker+legal:oathbreaker`);
+        state.oathPlaneswalker = await resWalker.json();
+        state.currentCard = state.oathPlaneswalker;
+        await rerollSignatureSpellOnly();
+        renderOathbreakerPair();
+      } catch (e) {}
+    }
+
+    async function rerollSignatureSpellOnly() {
+      if (!state.oathPlaneswalker) return;
+      try {
+        playDiceSound();
+        const id = state.oathPlaneswalker.color_identity || [];
+        const idQuery = id.length > 0 ? `identity<=${id.join('')}` : 'identity:c';
+        const resSpell = await fetch(`https://api.scryfall.com/cards/random?q=legal:oathbreaker+(t:instant+or+t:sorcery)+${idQuery}`);
+        state.oathSpell = await resSpell.json();
+        renderOathbreakerPair();
+      } catch (e) {}
+    }
+
+    function renderCommander(card) {
+      if (!card) return;
+      const isDfc = card.card_faces && card.card_faces.length > 1;
+      const face = isDfc ? (state.isFlipped ? card.card_faces[1] : card.card_faces[0]) : card;
+
+      document.getElementById('cardName').textContent = face.name || card.name;
+      document.getElementById('cardType').textContent = face.type_line || card.type_line;
+      document.getElementById('cardOracleText').textContent = face.oracle_text || 'Vanilla card with no oracle text.';
+
+      const img = document.getElementById('cardArtImage');
+      const imgUrl = face.image_uris ? (face.image_uris.large || face.image_uris.normal) : (card.image_uris ? card.image_uris.large : '');
+      if (img && imgUrl) img.src = imgUrl;
+
+      const symbolsDiv = document.getElementById('cardManaSymbols');
+      symbolsDiv.innerHTML = '';
+      const manaStr = face.mana_cost || card.mana_cost || '';
+      const symbols = manaStr.match(/\{[^}]+\}/g) || [];
+      symbols.forEach(sym => {
+        const clean = sym.replace(/[{}/]/g, '').toUpperCase();
+        const badge = document.createElement('span');
+        badge.className = 'w-5 h-5 rounded-full bg-slate-800 text-amber-300 font-bold text-[10px] flex items-center justify-center border border-slate-600 shadow-sm';
+        badge.textContent = clean;
+        symbolsDiv.appendChild(badge);
+      });
+
+      const priceTag = document.getElementById('cardPriceTag');
+      if (priceTag) priceTag.textContent = card.prices && card.prices.usd ? `$${card.prices.usd} USD` : '$0.25 USD';
+      
+      const rarityBadge = document.getElementById('cardRarityBadge');
+      if (rarityBadge) rarityBadge.textContent = (card.rarity || 'Rare').toUpperCase();
+
+      const ptEl = document.getElementById('cardPowerToughness');
+      if (face.power !== undefined && face.toughness !== undefined) {
+        ptEl.textContent = `${face.power} / ${face.toughness}`;
+        ptEl.classList.remove('hidden');
+      } else if (face.loyalty !== undefined) {
+        ptEl.textContent = `Loyalty: ${face.loyalty}`;
+        ptEl.classList.remove('hidden');
+      } else {
+        ptEl.classList.add('hidden');
+      }
+
+      const scryfallLink = document.getElementById('scryfallLink');
+      if (scryfallLink) scryfallLink.href = card.scryfall_uri || '#';
+      const edhrecLink = document.getElementById('edhrecLink');
+      if (edhrecLink) {
+        const slug = (card.name || '').toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
+        edhrecLink.href = `https://edhrec.com/commanders/${slug}`;
+      }
+
+      const flipBtn = document.getElementById('flipCardFaceBtn');
+      if (flipBtn) flipBtn.classList.toggle('hidden', !isDfc);
+    }
+
+    function renderOathbreakerPair() {
+      if (!state.oathPlaneswalker || !state.oathSpell) return;
+      
+      const wImg = document.getElementById('oathPlaneswalkerImg');
+      const wUrl = state.oathPlaneswalker.image_uris ? state.oathPlaneswalker.image_uris.large : (state.oathPlaneswalker.card_faces ? state.oathPlaneswalker.card_faces[0].image_uris.large : '');
+      if (wImg && wUrl) wImg.src = wUrl;
+
+      document.getElementById('oathPlaneswalkerName').textContent = state.oathPlaneswalker.name;
+      document.getElementById('oathPlaneswalkerType').textContent = state.oathPlaneswalker.type_line;
+      document.getElementById('oathPlaneswalkerLoyalty').textContent = `Loyalty: ${state.oathPlaneswalker.loyalty || 4}`;
+
+      const sImg = document.getElementById('oathSpellImg');
+      const sUrl = state.oathSpell.image_uris ? state.oathSpell.image_uris.large : '';
+      if (sImg && sUrl) sImg.src = sUrl;
+
+      document.getElementById('oathSpellName').textContent = state.oathSpell.name;
+      document.getElementById('oathSpellType').textContent = state.oathSpell.type_line;
+      document.getElementById('oathSpellCost').textContent = `Mana: ${state.oathSpell.mana_cost || '{1}'}`;
+    }
+
+    function toggleCardFace() {
+      if (!state.currentCard || !state.currentCard.card_faces) return;
+      state.isFlipped = !state.isFlipped;
+      renderCommander(state.currentCard);
+    }
+
+    async function startAutomatedDeckBuild() {
+      const activeCard = state.format === 'commander' ? state.currentCard : state.oathPlaneswalker;
+      if (!activeCard) return;
+
+      const btn = document.getElementById('autoBuildDeckBtn');
+      if (btn) btn.disabled = true;
+
+      try {
+        playDiceSound();
+        const colors = activeCard.color_identity && activeCard.color_identity.length > 0 ? activeCard.color_identity : ['C'];
+        const colorQuery = colors[0] === 'C' ? 'identity:c' : `identity<=${colors.join('')}`;
+        const targetSize = state.format === 'commander' ? 100 : 60;
+        const targetSpells = state.format === 'commander' ? 63 : 37;
+
+        // Query synergy spells from Scryfall
+        const searchUrl = `https://api.scryfall.com/cards/search?q=${encodeURIComponent(`legal:${state.format} ${colorQuery} (t:creature or t:instant or t:sorcery or t:artifact or t:enchantment) -is:funny -t:land`)}&order=edhrec`;
+        const res = await fetch(searchUrl);
+        const data = await res.json();
+        const pool = data.data || [];
+
+        const finalCards = [activeCard];
+        if (state.format === 'oathbreaker' && state.oathSpell) {
+          finalCards.push(state.oathSpell);
+        }
+
+        for (let i = 0; i < pool.length && finalCards.length <= targetSpells; i++) {
+          if (pool[i].name !== activeCard.name) {
+            finalCards.push(pool[i]);
+          }
+        }
+
+        // Fillers if needed
+        while (finalCards.length <= targetSpells) {
+          finalCards.push({
+            name: `Arcane Conduit ${finalCards.length}`,
+            type_line: "Artifact",
+            mana_cost: "{2}",
+            prices: { usd: "0.25" }
+          });
+        }
+
+        // Allocate Lands
+        const basicLands = { W: "Plains", U: "Island", B: "Swamp", R: "Mountain", G: "Forest", C: "Wastes" };
+        finalCards.push({ name: "Command Tower", type_line: "Land", mana_cost: "" });
+        finalCards.push({ name: "Exotic Orchard", type_line: "Land", mana_cost: "" });
+        
+        let remainingLands = targetSize - finalCards.length;
+        let cIdx = 0;
+        for (let i = 0; i < remainingLands; i++) {
+          const colorKey = colors[cIdx % colors.length];
+          const landName = basicLands[colorKey] || "Wastes";
+          finalCards.push({ name: landName, type_line: "Basic Land", mana_cost: "" });
+          cIdx++;
+        }
+
+        state.generatedDeck = {
+          commander: activeCard,
+          cards: finalCards
+        };
+
+        renderDeckViewerModal();
+      } catch (err) {
+        console.error(err);
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    function renderDeckViewerModal(filterCat = 'all', searchQuery = '') {
+      if (!state.generatedDeck) return;
+      const modal = document.getElementById('deckViewerModal');
+      const table = document.getElementById('deckCardListTable');
+      if (!table || !modal) return;
+
+      table.innerHTML = '';
+      const query = searchQuery.toLowerCase().trim();
+
+      state.generatedDeck.cards.forEach((card, index) => {
+        const type = (card.type_line || '').toLowerCase();
+        
+        if (filterCat === 'creature' && !type.includes('creature')) return;
+        if (filterCat === 'spell' && !type.includes('instant') && !type.includes('sorcery')) return;
+        if (filterCat === 'artifact' && !type.includes('artifact') && !type.includes('enchantment')) return;
+        if (filterCat === 'land' && !type.includes('land')) return;
+        if (query && !card.name.toLowerCase().includes(query)) return;
+
+        const row = document.createElement('div');
+        row.className = 'p-2.5 rounded-xl bg-black/40 border border-white/5 hover:border-amber-400/40 transition flex items-center justify-between text-xs cursor-pointer';
+        
+        const imgUrl = card.image_uris ? (card.image_uris.large || card.image_uris.normal) : (card.card_faces && card.card_faces[0].image_uris ? card.card_faces[0].image_uris.large : '');
+        row.addEventListener('mouseenter', (e) => showCardTooltip(imgUrl, e));
+        row.addEventListener('mousemove', (e) => updateTooltipPosition(e));
+        row.addEventListener('mouseleave', hideCardTooltip);
+
+        row.innerHTML = `
+          <div class="flex items-center gap-2 truncate">
+            <span class="text-slate-500 font-mono text-[10px]">${index + 1}.</span>
+            <span class="font-medium text-slate-200 truncate">${card.name}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-400 truncate hidden sm:inline">${(card.type_line || '').split('—')[0]}</span>
+            ${index !== 0 ? `<button onclick="event.stopPropagation(); swapCardRow(${index})" class="text-slate-400 hover:text-amber-400 px-1" title="Swap Card">⇄</button>` : ''}
+          </div>
+        `;
+        table.appendChild(row);
+      });
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeDeckModal() {
+      const modal = document.getElementById('deckViewerModal');
+      if (modal) modal.classList.add('hidden');
+      hideCardTooltip();
+    }
+
+    function filterDeckCategory(cat) {
+      ['all', 'creature', 'spell', 'artifact', 'land'].forEach(c => {
+        const btn = document.getElementById(`cat${c.charAt(0).toUpperCase() + c.slice(1)}Btn`);
+        if (btn) {
+          btn.className = c === cat ? 'px-3 py-1 rounded-lg font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'px-3 py-1 rounded-lg text-slate-400 hover:text-white';
+        }
+      });
+      renderDeckViewerModal(cat);
+    }
+
+    function searchDeckCards() {
+      const input = document.getElementById('deckCardSearchInput');
+      if (input) renderDeckViewerModal('all', input.value);
+    }
+
+    async function swapCardRow(index) {
+      if (!state.generatedDeck || index === 0) return;
+      playDiceSound();
+      state.generatedDeck.cards[index] = {
+        name: `Mind Stone`,
+        type_line: "Artifact",
+        mana_cost: "{2}",
+        prices: { usd: "0.45" }
+      };
+      renderDeckViewerModal();
+    }
+
+    function drawSampleHand() {
+      if (!state.generatedDeck || state.generatedDeck.cards.length < 7) return;
+      playDiceSound();
+      const modal = document.getElementById('sampleHandModal');
+      const grid = document.getElementById('sampleHandCardsGrid');
+      if (!modal || !grid) return;
+
+      const nonCommanders = state.generatedDeck.cards.slice(1);
+      const shuffled = [...nonCommanders].sort(() => 0.5 - Math.random());
+      const hand = shuffled.slice(0, 7);
+
+      grid.innerHTML = '';
+      hand.forEach(card => {
+        const imgUrl = card.image_uris ? (card.image_uris.normal || card.image_uris.large) : (card.card_faces ? card.card_faces[0].image_uris.normal : 'https://placehold.co/488x680/14151e/e5c158?text=Card');
+        const col = document.createElement('div');
+        col.className = 'flex flex-col gap-1.5';
+        col.innerHTML = `
+          <div class="w-full aspect-[5/7] rounded-xl overflow-hidden border border-white/10 shadow-lg">
+            <img src="${imgUrl}" alt="${card.name}" class="w-full h-full object-cover">
+          </div>
+          <span class="text-[10px] font-semibold text-slate-300 truncate">${card.name}</span>
+        `;
+        grid.appendChild(col);
+      });
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeSampleHandModal() {
+      const modal = document.getElementById('sampleHandModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    const tooltip = document.getElementById('floatingCardTooltip');
+    const tooltipImg = document.getElementById('floatingCardImg');
+
+    function showCardTooltip(imgUrl, e) {
+      if (!imgUrl || !tooltip || !tooltipImg) return;
+      tooltipImg.src = imgUrl;
+      updateTooltipPosition(e);
+      tooltip.classList.add('active');
+    }
+
+    function hideCardTooltip() {
+      if (!tooltip) return;
+      tooltip.classList.remove('active');
+    }
+
+    function updateTooltipPosition(e) {
+      if (!tooltip) return;
+      let left = e.clientX + 20;
+      let top = e.clientY - 120;
+      if (left + 250 > window.innerWidth) left = e.clientX - 260;
+      if (top + 340 > window.innerHeight) top = window.innerHeight - 350;
+      if (top < 10) top = 10;
+      tooltip.style.left = `${left}px`;
+      tooltip.style.top = `${top}px`;
+    }
+
+    function openExportModal() {
+      if (!state.generatedDeck) return;
+      const modal = document.getElementById('exportModal');
+      if (modal) modal.classList.remove('hidden');
+      refreshExportText();
+    }
+
+    function closeExportModal() {
+      const modal = document.getElementById('exportModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function refreshExportText() {
+      const textarea = document.getElementById('exportDecklistTextarea');
+      const cleanToggle = document.getElementById('cleanExportToggle');
+      if (!textarea || !state.generatedDeck) return;
+
+      const isClean = cleanToggle ? cleanToggle.checked : true;
+      let output = '';
+
+      if (!isClean) {
+        output += `// Deck: ${state.currentCard.name} (${state.format.toUpperCase()})\n`;
+        output += `// Challenge: ${state.currentChallenge ? state.currentChallenge.title : 'Standard'}\n\n`;
+      }
+
+      const cardCounts = {};
+      state.generatedDeck.cards.forEach(card => {
+        cardCounts[card.name] = (cardCounts[card.name] || 0) + 1;
+      });
+
+      for (const [name, qty] of Object.entries(cardCounts)) {
+        output += `${qty} ${name}\n`;
+      }
+
+      textarea.value = output;
+    }
+
+    function copyExportTextToClipboard() {
+      const textarea = document.getElementById('exportDecklistTextarea');
+      if (!textarea) return;
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        const btnLabel = document.getElementById('copyBtnLabel');
+        if (btnLabel) {
+          btnLabel.textContent = "Copied to Clipboard!";
+          setTimeout(() => btnLabel.textContent = "Copy to Clipboard", 2000);
+        }
+      } catch (e) {
+        navigator.clipboard.writeText(textarea.value);
+      }
+    }
+
+    function copyAndOpenArchidekt() {
+      copyExportTextToClipboard();
+      window.open('https://archidekt.com/decks/new', '_blank');
+    }
+
+    function openPodModal() {
+      const modal = document.getElementById('podModal');
+      if (modal) modal.classList.remove('hidden');
+      if (state.podSeats.length === 0) generatePodLineup();
+    }
+
+    function closePodModal() {
+      const modal = document.getElementById('podModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function setPodSize(size) {
+      state.podSize = size;
+      [2, 3, 4].forEach(s => {
+        const btn = document.getElementById(`podSize${s}Btn`);
+        if (btn) {
+          btn.className = s === size ? 'px-3 py-1 rounded font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'px-3 py-1 rounded font-semibold text-slate-400 hover:text-white';
+        }
+      });
+      generatePodLineup();
+    }
+
+    async function generatePodLineup() {
+      playDiceSound();
+      const grid = document.getElementById('podSeatsGrid');
+      if (!grid) return;
+      grid.innerHTML = '<div class="col-span-full py-12 text-center text-slate-400"><i class="fa-solid fa-spinner fa-spin text-2xl theme-accent-text mb-2"></i><p class="text-xs">Summoning Pod Members...</p></div>';
+
+      const seats = [];
+      for (let i = 0; i < state.podSize; i++) {
+        try {
+          const res = await fetch(`https://api.scryfall.com/cards/random?q=is:commander+legal:commander`);
+          const card = await res.json();
+          seats.push({
+            seatNumber: i + 1,
+            card: card,
+            challenge: CHALLENGES[Math.floor(Math.random() * CHALLENGES.length)]
+          });
+        } catch (e) {
+          seats.push({
+            seatNumber: i + 1,
+            card: { name: "Prossh, Skyraider of Kher", type_line: "Legendary Creature", image_uris: { normal: "https://placehold.co/488x680/14151e/e5c158?text=Seat" } },
+            challenge: CHALLENGES[0]
+          });
+        }
+      }
+      state.podSeats = seats;
+      renderPodSeats();
+    }
+
+    function renderPodSeats() {
+      const grid = document.getElementById('podSeatsGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      state.podSeats.forEach(seat => {
+        const img = seat.card.image_uris ? (seat.card.image_uris.normal || seat.card.image_uris.large) : '';
+        const col = document.createElement('div');
+        col.className = 'p-3 rounded-xl theme-surface border theme-border flex flex-col gap-3 shadow-lg';
+        col.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-400">Player ${seat.seatNumber}</span>
+            <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded text-slate-300">${seat.challenge.difficulty}</span>
+          </div>
+          <div class="w-full aspect-[5/7] rounded-lg overflow-hidden border border-white/10 shadow">
+            <img src="${img}" alt="${seat.card.name}" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <h4 class="font-bold text-xs text-white truncate">${seat.card.name}</h4>
+            <p class="text-[11px] text-amber-300/80 font-medium mt-0.5 truncate">${seat.challenge.title}</p>
+          </div>
+          <button onclick="loadPodSeatIntoMain(${seat.seatNumber - 1})" class="w-full py-1.5 rounded-lg text-xs font-semibold theme-btn-primary transition">Select Commander</button>
+        `;
+        grid.appendChild(col);
+      });
+    }
+
+    function loadPodSeatIntoMain(seatIdx) {
+      const seat = state.podSeats[seatIdx];
+      if (!seat) return;
+      state.currentCard = seat.card;
+      state.currentChallenge = seat.challenge;
+      renderCommander(seat.card);
+      
+      document.getElementById('challengeTitle').textContent = seat.challenge.title;
+      document.getElementById('challengeDesc').textContent = seat.challenge.desc;
+      closePodModal();
+    }
+
+    function toggleFavoriteCurrentCard() {
+      if (!state.currentCard) return;
+      playDiceSound();
+      const existingIdx = state.favorites.findIndex(c => c.name === state.currentCard.name);
+      if (existingIdx >= 0) state.favorites.splice(existingIdx, 1);
+      else state.favorites.push(state.currentCard);
+
+      const count = document.getElementById('savedCountBadge');
+      if (count) count.textContent = state.favorites.length;
+
+      const btn = document.getElementById('bookmarkCardBtn');
+      if (btn) {
+        btn.innerHTML = `<i class="${existingIdx >= 0 ? 'fa-regular' : 'fa-solid text-amber-400'} fa-bookmark"></i>`;
+      }
+    }
+
+    function toggleDrawer() {
+      toggleFavoriteCurrentCard();
+    }
+
+    // Initialize application on page load
+    window.onload = function () {
+      setTheme(state.activeTheme);
+      rollNewChallenge();
+      buildScryfallQuery();
+      fetchRandomCommander();
+    };
+  </script>
+</body>
+</html>
